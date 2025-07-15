@@ -10,5 +10,28 @@
   <body>
     <h1>Library</h1>
     <div class="container"></div>
+    <button class="new" type="button">New Book</button>
+    <dialog>
+      <h1>New Book</h1>
+      <form method="dialog">
+        <label for="title">
+          Title
+          <input type="text" name="title" id="title" required>
+        </label>
+        <label for="author">
+          Author
+          <input type="text" name="author" id="author" required>
+        </label>
+        <label for="pages">
+          Pages
+          <input type="number" name="pages" id="pages" min="1" value="1" required>
+        </label>
+        <label for="read">
+          Read
+          <input type="checkbox" name="read" id="read">
+        </label>
+        <button class="add" type="submit">Add</button>
+      </form>
+    </dialog>
   </body>
 </html>
