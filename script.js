@@ -5,6 +5,13 @@
   const form = modal.querySelector('form');
   const library = [];
 
+  container.addEventListener('click', (e) => {
+    if (e.target.type !== 'checkbox') return;
+    const book = library.find((book) => book.id === e.target.value);
+    book.setRead(e.target.checked);
+    displayBooks();
+  });
+
   newBtn.addEventListener('click', () => {
     modal.showModal();
   });
@@ -29,6 +36,7 @@
 
   // TEMP
   addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '228', false);
+  addBookToLibrary('The Lord of the Rings', 'J.R.R. Tolkien', '666', true);
   addBookToLibrary('War & Peace', 'Lev Tolstoy', '9000', false);
 
   function displayBooks() {
@@ -43,20 +51,28 @@
       const details = document.createElement('dl');
       card.append(title, details);
 
-      for (let key in book) {
+      for (let key of Object.getOwnPropertyNames(book)) {
         if (['id', 'title'].includes(key)) continue;
         const item = document.createElement('div');
         details.appendChild(item);
 
         const term = document.createElement('dt');
         term.textContent = key[0].toUpperCase() + key.slice(1);
-        const desc = document.createElement('dd');
-        desc.textContent = book[key];
+        let desc;
+        if (key === 'read') {
+          desc = document.createElement('input');
+          desc.type = 'checkbox';
+          desc.name = 'read';
+          desc.value = book.id;
+          desc.checked = book[key];
+        } else {
+          desc = document.createElement('dd');
+          desc.textContent = book[key];
+        }
         item.append(term, desc);
       }
     });
   }
-  displayBooks();
 
   function addBookToLibrary(title, author, pages, read) {
     const id = crypto.randomUUID();
@@ -75,4 +91,9 @@
     this.pages = pages;
     this.read = read;
   }
+  Book.prototype.setRead = function (value) {
+    this.read = value;
+  };
+
+  displayBooks();
 })();
