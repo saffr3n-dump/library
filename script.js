@@ -3,13 +3,20 @@
   const newBtn = document.querySelector('.new');
   const modal = document.querySelector('dialog');
   const form = modal.querySelector('form');
-  const library = [];
+  let library = [];
 
   container.addEventListener('click', (e) => {
-    if (e.target.type !== 'checkbox') return;
-    const book = library.find((book) => book.id === e.target.value);
-    book.setRead(e.target.checked);
-    displayBooks();
+    if (e.target.type === 'checkbox') {
+      const book = library.find((book) => book.id === e.target.value);
+      book.setRead(e.target.checked);
+      displayBooks();
+      return;
+    }
+
+    if (e.target.className === 'rm') {
+      library = library.filter((book) => book.id !== e.target.value);
+      displayBooks();
+    }
   });
 
   newBtn.addEventListener('click', () => {
@@ -49,7 +56,12 @@
       const title = document.createElement('h2');
       title.textContent = book.title;
       const details = document.createElement('dl');
-      card.append(title, details);
+      const rmBtn = document.createElement('button');
+      rmBtn.className = 'rm';
+      rmBtn.textContent = 'Remove';
+      rmBtn.type = 'button';
+      rmBtn.value = book.id;
+      card.append(title, details, rmBtn);
 
       for (let key of Object.getOwnPropertyNames(book)) {
         if (['id', 'title'].includes(key)) continue;
