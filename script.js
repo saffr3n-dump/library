@@ -1,4 +1,18 @@
 (() => {
+  class Book {
+    constructor(id, title, author, pages, read) {
+      this.id = id;
+      this.title = title;
+      this.author = author;
+      this.pages = pages;
+      this.read = read;
+    }
+
+    setRead(value) {
+      this.read = value;
+    }
+  }
+
   const container = document.querySelector('.container');
   const newBtn = document.querySelector('.new');
   const modal = document.querySelector('dialog');
@@ -90,20 +104,6 @@
     const id = crypto.randomUUID();
     const book = new Book(id, title, author, pages, read);
     library.push(book);
-  }
-
-  class Book {
-    constructor(id, title, author, pages, read) {
-      this.id = id;
-      this.title = title;
-      this.author = author;
-      this.pages = pages;
-      this.read = read;
-    }
-
-    setRead(value) {
-      this.read = value;
-    }
   }
 
   displayBooks();
