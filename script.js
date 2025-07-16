@@ -92,20 +92,19 @@
     library.push(book);
   }
 
-  function Book(id, title, author, pages, read) {
-    if (!new.target) {
-      throw new Error("'new' must be used to call the constructor");
+  class Book {
+    constructor(id, title, author, pages, read) {
+      this.id = id;
+      this.title = title;
+      this.author = author;
+      this.pages = pages;
+      this.read = read;
     }
 
-    this.id = id;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+    setRead(value) {
+      this.read = value;
+    }
   }
-  Book.prototype.setRead = function (value) {
-    this.read = value;
-  };
 
   displayBooks();
 })();
